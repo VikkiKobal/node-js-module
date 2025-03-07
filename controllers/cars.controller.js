@@ -8,17 +8,18 @@ async function createCar(req, res) {
             data: newCar
         });
     } catch (err) {
+        console.error("Error creating car:", err);
         res.status(500).json({
             status: 500,
-            error: 'Internal server error',
-            details: err.message,  
+            error: 'Internal server error'
         });
     }
 }
 
+
 async function getCars(req, res) {
     try {
-        const { searchString, page = 1, perPage = 10 } = req.query; 
+        const { searchString, page = 1, perPage = 10 } = req.query;
         const result = await carService.find({ searchString, page, perPage });
 
         res.status(200).json({
@@ -29,14 +30,14 @@ async function getCars(req, res) {
         res.status(500).json({
             status: 500,
             error: 'Internal server error',
-            details: err.message,  
+            details: err.message,
         });
     }
 }
 
 async function getCar(req, res) {
     try {
-        const { carId } = req.params;  
+        const { carId } = req.params;
         const car = await carService.findById(carId);
 
         if (!car) {
@@ -54,14 +55,14 @@ async function getCar(req, res) {
         res.status(500).json({
             status: 500,
             error: 'Internal server error',
-            details: err.message,  
+            details: err.message,
         });
     }
 }
 
 async function updateCar(req, res) {
     try {
-        const { carId } = req.params;  
+        const { carId } = req.params;
         const carData = req.body;
 
         const car = await carService.findById(carId);
@@ -82,7 +83,7 @@ async function updateCar(req, res) {
         res.status(500).json({
             status: 500,
             error: 'Internal server error',
-            details: err.message,  
+            details: err.message,
         });
     }
 }
@@ -109,7 +110,7 @@ async function deleteCar(req, res) {
         res.status(500).json({
             status: 500,
             error: 'Internal server error',
-            details: err.message,  
+            details: err.message,
         });
     }
 }

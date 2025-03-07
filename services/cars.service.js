@@ -13,16 +13,17 @@ async function create(carData) {
     return newCar;
 }
 
+
 async function find({ searchString = '', page = 1, perPage = Number.MAX_SAFE_INTEGER }) {
-    searchString = searchString?.trim().toLowerCase() || ''; 
+    searchString = searchString?.trim().toLowerCase() || '';
 
     const carsToFilter = searchString ?
         mockData.cars.filter(c => c.brand?.toLowerCase().includes(searchString)) :
         mockData.cars;
 
     return {
-        items: carsToFilter.slice((page - 1) * perPage, page * perPage),  
-        count: carsToFilter.length,  
+        items: carsToFilter.slice((page - 1) * perPage, page * perPage),
+        count: carsToFilter.length,
     };
 }
 
