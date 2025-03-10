@@ -1,54 +1,37 @@
-const mockData = require('../helpers/mock-data');
 const Car = require('../models/car.model');
 
-function _generateId() {
-    const crypto = require("crypto");
-    return crypto.randomBytes(16).toString("hex");
-}
-
+// Створення автомобіля
 async function create(carData) {
-    const newCar = { id: _generateId(), ...carData };
-    mockData.cars.push(newCar);
-
-    return newCar;
+    const newCar = new Car(carData);
+    return await newCar.save();
 }
 
+// Отримання всіх автомобілів
+async function find({ searchString = '', page = 1, perPage = 10 }) {
+    const query = searchString ? { make: new RegExp(searchString, 'i') } : {};
 
-async function find({ searchString = '', page = 1, perPage = Number.MAX_SAFE_INTEGER }) {
-    searchString = searchString?.trim().toLowerCase() || '';
+    const cars = await Car.find(query)
+        .skip((page - 1) * perPage)
+        .limit(perPage);
 
-    const carsToFilter = searchString ?
-        mockData.cars.filter(c => c.brand?.toLowerCase().includes(searchString)) :
-        mockData.cars;
+    const count = await Car.countDocuments(query);
 
-    return {
-        items: carsToFilter.slice((page - 1) * perPage, page * perPage),
-        count: carsToFilter.length,
-    };
+    return { items: cars, count };
 }
 
+// Отримання автомобіля за ID
 async function findById(id) {
-    return mockData.cars.find(c => c.id == id);
+    return await Car.findById(id);
 }
 
+// Оновлення автомобіля
 async function update(carId, carData) {
-    const index = mockData.cars.findIndex(c => c.id === carId);
-
-    if (index === -1) return;
-
-    const updatedCar = { ...mockData.cars[index], ...carData, id: carId };
-
-    mockData.cars[index] = updatedCar;
+    return await Car.findByIdAndUpdate(carId, carData, { new: true });
 }
 
+// Видалення автомобіля
 async function remove(id) {
-    mockData.cars = mockData.cars.filter(c => c.id != id);
+    return await Car.findByIdAndDelete(id);
 }
 
-module.exports = {
-    create,
-    find,
-    findById,
-    update,
-    remove,
-};
+module.exports = { create, find, findById, update, remove };

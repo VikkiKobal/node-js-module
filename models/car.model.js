@@ -1,19 +1,15 @@
-class Car {
-    constructor(licensePlate, year, make, color, condition, ownerLastName, ownerAddress) {
-        const _generateId = () => {
-            const crypto = require("crypto");
-            return crypto.randomBytes(16).toString("hex");
-        };
+const mongoose = require('mongoose');
 
-        this.id = _generateId();
-        this.licensePlate = licensePlate;
-        this.year = year;
-        this.make = make;
-        this.color = color;
-        this.condition = condition;
-        this.ownerLastName = ownerLastName;
-        this.ownerAddress = ownerAddress;
-    }
-}
+const carSchema = new mongoose.Schema({
+    licensePlate: { type: String, required: true },
+    year: { type: Number, required: true },
+    make: { type: String, required: true },
+    color: { type: String, required: true },
+    condition: { type: String, required: true },
+    ownerLastName: { type: String, required: true },
+    ownerAddress: { type: String, required: true }
+}, { timestamps: true });
+
+const Car = mongoose.model('Car', carSchema);
 
 module.exports = Car;
