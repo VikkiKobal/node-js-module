@@ -7,6 +7,10 @@ app.use(express.json());
 connectDB();
 
 const carRoutes = require('./routes/cars.routes');
-app.use('/cars', carRoutes);
+const authRoutes = require('./routes/auth.routes');
 
-app.listen(5000, () => console.log('Server is running on port 5000'));
+app.use('/cars', carRoutes);
+app.use('/auth', authRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

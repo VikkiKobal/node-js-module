@@ -16,7 +16,6 @@ async function createCar(req, res) {
     }
 }
 
-
 async function getCars(req, res) {
     try {
         const { searchString, page = 1, perPage = 10 } = req.query;
@@ -88,7 +87,6 @@ async function updateCar(req, res) {
     }
 }
 
-// Delete a car by its ID
 async function deleteCar(req, res) {
     try {
         const { carId } = req.params;
