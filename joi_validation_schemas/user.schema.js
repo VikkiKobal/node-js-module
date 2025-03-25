@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
 const userSchema = Joi.object({
-    // Ім'я користувача
     firstName: Joi.string()
         .min(2)
         .max(50)
@@ -13,7 +12,6 @@ const userSchema = Joi.object({
             'any.required': 'First name is required.'
         }),
 
-    // Прізвище користувача
     lastName: Joi.string()
         .min(2)
         .max(50)
@@ -25,7 +23,6 @@ const userSchema = Joi.object({
             'any.required': 'Last name is required.'
         }),
 
-    // Адреса електронної пошти
     email: Joi.string()
         .email()
         .required()
@@ -35,7 +32,6 @@ const userSchema = Joi.object({
             'any.required': 'Email is required.'
         }),
 
-    // Пароль користувача
     password: Joi.string()
         .min(8)
         .max(100)
@@ -47,7 +43,6 @@ const userSchema = Joi.object({
             'any.required': 'Password is required.'
         }),
 
-    // Підтвердження пароля
     confirmPassword: Joi.string()
         .valid(Joi.ref('password'))
         .required()
@@ -56,7 +51,6 @@ const userSchema = Joi.object({
             'any.required': 'Confirm password is required.'
         }),
 
-    // Дата народження користувача
     birthDate: Joi.date()
         .less('now')
         .required()
@@ -66,7 +60,6 @@ const userSchema = Joi.object({
             'any.required': 'Birth date is required.'
         }),
 
-    // Номер телефону
     phone: Joi.string()
         .pattern(/^[0-9]{10}$/)
         .required()
@@ -76,7 +69,6 @@ const userSchema = Joi.object({
             'any.required': 'Phone number is required.'
         }),
 
-    // Адреса користувача
     address: Joi.string()
         .min(5)
         .max(200)
