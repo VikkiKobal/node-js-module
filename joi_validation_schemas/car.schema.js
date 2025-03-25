@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
 const carSchema = Joi.object({
-    // Номерний знак 
     licensePlate: Joi.string()
         .pattern(/^[A-Z0-9]{1,10}$/)
         .required()
@@ -11,7 +10,6 @@ const carSchema = Joi.object({
             'any.required': 'License plate is required.'
         }),
 
-    // Рік випуску автомобіля
     year: Joi.number()
         .integer()
         .min(1886)
@@ -24,7 +22,6 @@ const carSchema = Joi.object({
             'any.required': 'Year is required.'
         }),
 
-    // Марка автомобіля
     make: Joi.string()
         .min(2)
         .max(50)
@@ -36,7 +33,6 @@ const carSchema = Joi.object({
             'any.required': 'Make is required.'
         }),
 
-    // Колір автомобіля
     color: Joi.string()
         .min(3)
         .max(30)
@@ -48,7 +44,6 @@ const carSchema = Joi.object({
             'any.required': 'Color is required.'
         }),
 
-    // Стан автомобіля
     condition: Joi.string()
         .valid('new', 'used', 'certified')
         .required()
@@ -58,7 +53,6 @@ const carSchema = Joi.object({
             'any.required': 'Condition is required.'
         }),
 
-    // Призвище власника автомобіля
     ownerLastName: Joi.string()
         .min(2)
         .max(100)
@@ -70,7 +64,6 @@ const carSchema = Joi.object({
             'any.required': 'Owner last name is required.'
         }),
 
-    // Адреса власника автомобіля
     ownerAddress: Joi.string()
         .min(5)
         .max(200)
