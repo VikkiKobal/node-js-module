@@ -1,11 +1,10 @@
-const createError = require('http-errors');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
-async function authenticationCheck(req, res, next) {
-    const token = req.headers['x-auth'];
+const authenticationCheck = (req, res, next) => {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+
     if (!token) {
-        return next(createError.Unauthorized('Application access token is required'));
+        return res.status(401).json({ message: 'No token provided' });
     }
 
     try {
@@ -13,8 +12,8 @@ async function authenticationCheck(req, res, next) {
         req.user = decoded;
         next();
     } catch (err) {
-        return next(createError.Unauthorized('Invalid application access token'));
+        return res.status(401).json({ message: 'Invalid token' });
     }
-}
+};
 
 module.exports = authenticationCheck;
